@@ -10,25 +10,32 @@ public class Server extends UnicastRemoteObject implements ServerInterface{
     }
 
     @Override
-    public int login() throws RemoteException {
-        
-        return 0;
+    public int signin(String uname, String pwd) throws RemoteException {
+        return Query.authenticateLogin(uname, pwd);
     }
 
     @Override
     public String getServerConnection() throws RemoteException {
         if(currServerToConnect % 3 == 0){
             System.out.println("Connecting to Server A");
+            currServerToConnect++;
             return "A";
         }
 
         if(currServerToConnect % 3 == 1){
             System.out.println("Connecting to Server B");
+            currServerToConnect++;
             return "B";
         }
 
         System.out.println("Connecting to server C");
+        currServerToConnect++;
         return "C";
+    }
+
+    @Override
+    public int signup(String uname, String pwd) throws RemoteException {
+        return Query.createAccount(uname, pwd);
     }
 
     
