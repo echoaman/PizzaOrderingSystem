@@ -64,10 +64,37 @@ public class Client {
             }
 
             //get connection
-            connectedServer = st.getServerConnection();
-            st = (ServerInterface)Naming.lookup("rmi://localhost/server"+connectedServer);
-            System.out.println("Connected to server " + connectedServer);
+            connection();
 
+        } catch (Exception e) {
+            //TODO: handle exception
+            e.printStackTrace();
+        }
+    }
+
+    public static void connection(){
+        try {
+            connectedServer = st.getServerConnection(user_id);
+            st = (ServerInterface)Naming.lookup("rmi://localhost/server"+connectedServer);
+            System.out.println("\nConnected to server " + connectedServer);
+
+            while(true){
+                System.out.println("\n1.Menu\t2.Place Order\t3.Orders\t4.Exit");
+                String choice = in.nextLine().trim();
+
+                if(choice.equals("1")){
+                    ArrayList<ArrayList<String>> menu = new ArrayList<>();
+                    menu = st.menu(user_id);
+                    System.out.println("\nSrNo\tName\tCost");
+                    for(ArrayList<String> row : menu){
+                        System.out.println(row.get(0) + "\t" + row.get(1) + "\t" + row.get(2));
+                    }
+                }
+
+                if(choice.equals("4")){
+                    System.exit(0);
+                }
+            }
         } catch (Exception e) {
             //TODO: handle exception
             e.printStackTrace();
