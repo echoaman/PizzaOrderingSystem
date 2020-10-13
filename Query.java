@@ -120,5 +120,32 @@ public class Query {
             //TODO: handle exception
         }
     }
+
+    public static ArrayList<ArrayList<String>> getUserOrder(int uid){
+        ArrayList<ArrayList<String>> history = new ArrayList<>();
+        try {
+            Connection conn = DriverManager.getConnection(db_url, db_user, db_pwd);
+            PreparedStatement statement = conn.prepareStatement("SELECT * FROM order_slave WHERE uid = ?");
+            statement.setInt(1, uid);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            while(resultSet.next()){
+                ArrayList<String> row = new ArrayList<>();
+                row.add(resultSet.getString("oid"));
+                row.add(resultSet.getString("order_time"));
+                row.add(resultSet.getString("order_status"));
+                history.add(row);
+            }
+
+            conn.close();
+            return history;
+        } catch (Exception e) {
+            //TODO: handle exception
+            e.printStackTrace();
+        }
+
+        return history;
+    }
 }
 

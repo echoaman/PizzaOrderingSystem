@@ -41,16 +41,24 @@ public class Server extends UnicastRemoteObject implements ServerInterface {
 
     @Override
     public ArrayList<ArrayList<String>> menu(int uid) throws RemoteException {
-        System.out.println("\nReturning menu for ID = " + uid);
         ArrayList<ArrayList<String>> menu = Query.getMenu();
+        System.out.println("\nReturning menu for ID = " + uid);
         return menu;
     }
 
     @Override
     public void placeOrder(int uid, String[] items) throws RemoteException {
         // TODO Auto-generated method stub
-        System.out.println("Placing order for UID " + uid + " => " + Arrays.toString(items));
         Query.createOrder(uid, items);
+        System.out.println("Placing order for UID " + uid + " => " + Arrays.toString(items));
+    }
+
+    @Override
+    public ArrayList<ArrayList<String>> getUserOrders(int uid) throws RemoteException {
+        ArrayList<ArrayList<String>> history = new ArrayList<>();
+        history = Query.getUserOrder(uid);
+        System.out.println("Order History of UID " + uid + " => " + history);
+        return history;
     }
 
     

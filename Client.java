@@ -79,7 +79,7 @@ public class Client {
             System.out.println("\nConnected to server " + connectedServer);
 
             while(true){
-                System.out.println("\n1.Menu\t2.Place Order\t3.Pending Orders\t4.Order History\t5.Exit");
+                System.out.println("\n1.Menu\t2.Place Order\t3.Order History\t4.Exit");
                 String choice = in.nextLine().trim();
 
                 if(choice.equals("1")){
@@ -92,12 +92,20 @@ public class Client {
                 }
 
                 if(choice.equals("2")){
-                    System.out.print("Enter items: ");
+                    System.out.print("\nEnter items: ");
                     String[] items = in.nextLine().trim().split(" ");
                     st.placeOrder(user_id, items);
                 }
 
-                if(choice.equals("5")){
+                if(choice.equals("3")){
+                    ArrayList<ArrayList<String>> history = st.getUserOrders(user_id);
+                    System.out.println("\nSrNo\tDate\t\t\tStatus");
+                    for(ArrayList<String> row : history){
+                        System.out.println(row.get(0) + "\t" + row.get(1) + "\t" + row.get(2));
+                    }
+                }
+
+                if(choice.equals("4")){
                     System.exit(0);
                 }
             }

@@ -7,4 +7,5 @@ public interface ServerInterface extends Remote{
     public String getServerConnection(int uid) throws RemoteException;
     public ArrayList<ArrayList<String>> menu(int uid) throws RemoteException;
     public void placeOrder(int uid, String[] items) throws RemoteException;
+    public ArrayList<ArrayList<String>> getUserOrders(int uid) throws RemoteException;
 }
