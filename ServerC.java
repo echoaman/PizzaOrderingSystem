@@ -1,10 +1,10 @@
 import java.rmi.*;
 
-public class Client {
+public class ServerC {
     public static void main(String[] args) {
         try {
-            ServerInterface st = (ServerInterface)Naming.lookup("rmi://localhost/loadbalancer");
-            System.out.println(st.getServerConnection());
+            ServerInterface serv = new Server();
+            Naming.rebind("serverC", serv);
         } catch (Exception e) {
             //TODO: handle exception
             e.printStackTrace();
