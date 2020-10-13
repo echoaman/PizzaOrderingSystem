@@ -79,7 +79,7 @@ public class Client {
             System.out.println("\nConnected to server " + connectedServer);
 
             while(true){
-                System.out.println("\n1.Menu\t2.Place Order\t3.Orders\t4.Exit");
+                System.out.println("\n1.Menu\t2.Place Order\t3.Pending Orders\t4.Order History\t5.Exit");
                 String choice = in.nextLine().trim();
 
                 if(choice.equals("1")){
@@ -91,7 +91,13 @@ public class Client {
                     }
                 }
 
-                if(choice.equals("4")){
+                if(choice.equals("2")){
+                    System.out.print("Enter items: ");
+                    String[] items = in.nextLine().trim().split(" ");
+                    st.placeOrder(user_id, items);
+                }
+
+                if(choice.equals("5")){
                     System.exit(0);
                 }
             }

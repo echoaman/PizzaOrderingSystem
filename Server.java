@@ -18,18 +18,18 @@ public class Server extends UnicastRemoteObject implements ServerInterface {
     @Override
     public String getServerConnection(int uid) throws RemoteException {
         if (currServerToConnect % 3 == 0) {
-            System.out.println("Connecting " + uid + " to Server A");
+            System.out.println("Connecting UID " + uid + " to Server A");
             currServerToConnect++;
             return "A";
         }
 
         if (currServerToConnect % 3 == 1) {
-            System.out.println("Connecting " + uid + " to Server B");
+            System.out.println("Connecting UID" + uid + " to Server B");
             currServerToConnect++;
             return "B";
         }
 
-        System.out.println("Connecting " + uid + " to Server C");
+        System.out.println("Connecting UID" + uid + " to Server C");
         currServerToConnect++;
         return "C";
     }
@@ -41,10 +41,16 @@ public class Server extends UnicastRemoteObject implements ServerInterface {
 
     @Override
     public ArrayList<ArrayList<String>> menu(int uid) throws RemoteException {
-        System.out.println("\nServing " + uid);
+        System.out.println("\nReturning menu for ID = " + uid);
         ArrayList<ArrayList<String>> menu = Query.getMenu();
-        System.out.println(menu);
         return menu;
+    }
+
+    @Override
+    public void placeOrder(int uid, String[] items) throws RemoteException {
+        // TODO Auto-generated method stub
+        System.out.println("Placing order for UID " + uid + " => " + Arrays.toString(items));
+        Query.createOrder(uid, items);
     }
 
     

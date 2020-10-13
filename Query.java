@@ -87,5 +87,38 @@ public class Query {
 
         return menu;
     }
+
+    public static void createOrder(int uid, String[] items){
+        try {
+            Connection conn = DriverManager.getConnection(db_url, db_user, db_pwd);
+            Statement count_statment = conn.createStatement();
+
+            ResultSet count_resSet = count_statment.executeQuery("SELECT MAX(oid) as TEMP FROM order_slave");
+            
+            int row = 0;
+            while(count_resSet.next()){
+                row = count_resSet.getInt("TEMP");
+            }
+            row++;
+
+            PreparedStatement ins_statement = conn.prepareStatement("INSERT INTO order_master(uid) VALUES(?)");
+            ins_statement.setInt(1, uid);
+            
+            ins_statement.executeUpdate();
+
+            for(String item : items){
+                PreparedStatement item_statement = conn.prepareStatement("INSERT INTO order_detail(oid,pid) VALUES(?,?)");
+                item_statement.setInt(1, row);
+                item_statement.setInt(2, Integer.parseInt(item));
+
+                item_statement.executeUpdate();
+            }
+
+            conn.close();
+
+        } catch (Exception e) {
+            //TODO: handle exception
+        }
+    }
 }
 
