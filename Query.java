@@ -12,11 +12,14 @@ public class Query {
 
             ResultSet resultSet = statement.executeQuery();
 
-            conn.close();
+            int result = -1;
+            if(resultSet.next()){
+                System.out.println(resultSet.getInt("uid"));
+                result = resultSet.getInt("uid");
+            }
 
-            if(resultSet.first()){
-                return resultSet.getInt("uid");
-            }else return -1;
+            conn.close();
+            return result;
 
         } catch (Exception e) {
             //TODO: handle exception
@@ -37,11 +40,14 @@ public class Query {
 
             int rows = statement.executeUpdate();
 
-            conn.close();
-
+            int result = -1;
             if(rows == 1){
-                return Query.authenticateLogin(uname, pwd);
-            }else return -1;
+                conn.close();
+                result = authenticateLogin(uname, pwd);
+            }
+
+            conn.close();
+            return result;
             
         } catch (Exception e) {
             //TODO: handle exception
@@ -51,3 +57,4 @@ public class Query {
         return -1;
     }
 }
+
