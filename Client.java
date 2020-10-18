@@ -84,7 +84,7 @@ public class Client {
 
                 if(choice.equals("1")){
                     ArrayList<ArrayList<String>> menu = new ArrayList<>();
-                    menu = st.menu(user_id);
+                    menu = st.getMenu(user_id);
                     System.out.println("\nSrNo\tName\tCost");
                     for(ArrayList<String> row : menu){
                         System.out.println(row.get(0) + "\t" + row.get(1) + "\t" + row.get(2));

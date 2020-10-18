@@ -40,7 +40,7 @@ public class Server extends UnicastRemoteObject implements ServerInterface {
     }
 
     @Override
-    public ArrayList<ArrayList<String>> menu(int uid) throws RemoteException {
+    public ArrayList<ArrayList<String>> getMenu(int uid) throws RemoteException {
         ArrayList<ArrayList<String>> menu = Query.getMenu();
         System.out.println("\nReturning menu for ID = " + uid);
         return menu;
@@ -59,6 +59,18 @@ public class Server extends UnicastRemoteObject implements ServerInterface {
         history = Query.getUserOrder(uid);
         System.out.println("Order History of UID " + uid + " => " + history);
         return history;
+    }
+
+    @Override
+    public void updateStatus(int oid) throws RemoteException {
+        Query.update_order_status(oid);
+    }
+
+    @Override
+    public ArrayList<ArrayList<String>> allOrders() throws RemoteException {
+        ArrayList<ArrayList<String>> orders = new ArrayList<>();
+        orders = Query.get_all_user_orders();
+        return orders;
     }
 
     

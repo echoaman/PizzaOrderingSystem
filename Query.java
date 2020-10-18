@@ -7,6 +7,50 @@ public class Query {
     public static final String db_user = "root";
     public static final String db_pwd = "369369";
 
+    public static void update_order_status(int oid) {
+        try {
+            Connection conn = DriverManager.getConnection(db_url, db_user, db_pwd);
+            PreparedStatement statement = conn
+                    .prepareStatement("UPDATE order_master SET order_status = True WHERE oid = ?");
+            statement.setInt(1, oid);
+
+            int rows = statement.executeUpdate();
+            System.out.println("update status " + rows);
+
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+    }
+
+    public static ArrayList<ArrayList<String>> get_all_user_orders() {
+        ArrayList<ArrayList<String>> orders = new ArrayList<>();
+        try {
+            Connection conn = DriverManager.getConnection(db_url, db_user, db_pwd);
+            Statement statement = conn.createStatement();
+
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM order_slave");
+
+            while(resultSet.next()){
+                ArrayList<String> curr_order = new ArrayList<>();
+                curr_order.add(resultSet.getString("oid"));
+                curr_order.add(resultSet.getString("uid"));
+                curr_order.add(resultSet.getString("order_time"));
+                curr_order.add(resultSet.getString("order_status"));
+                orders.add(curr_order);
+            }
+
+            conn.close();
+            return orders;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return orders;
+    }
+
     public static int authenticateLogin(String uname, String pwd){
         try {
             Connection conn = DriverManager.getConnection(db_url, db_user, db_pwd);
@@ -26,7 +70,6 @@ public class Query {
             return result;
 
         } catch (Exception e) {
-            //TODO: handle exception
             e.printStackTrace();
         }
 
@@ -54,7 +97,6 @@ public class Query {
             return result;
             
         } catch (Exception e) {
-            //TODO: handle exception
             e.printStackTrace();
         }
 
@@ -81,7 +123,6 @@ public class Query {
             conn.close();
             return menu;
         } catch (Exception e) {
-            //TODO: handle exception
             e.printStackTrace();
         }
 
@@ -117,7 +158,7 @@ public class Query {
             conn.close();
 
         } catch (Exception e) {
-            //TODO: handle exception
+            e.printStackTrace();
         }
     }
 
@@ -141,7 +182,6 @@ public class Query {
             conn.close();
             return history;
         } catch (Exception e) {
-            //TODO: handle exception
             e.printStackTrace();
         }
 
