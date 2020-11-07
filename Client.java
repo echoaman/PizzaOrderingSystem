@@ -64,6 +64,8 @@ public class Client {
             }
 
             //get connection
+            connectedServer = st.getServerConnection(user_id);
+            st = (ServerInterface)Naming.lookup("rmi://localhost/server"+connectedServer);
             connection();
 
         } catch (Exception e) {
@@ -74,8 +76,6 @@ public class Client {
 
     public static void connection(){
         try {
-            connectedServer = st.getServerConnection(user_id);
-            st = (ServerInterface)Naming.lookup("rmi://localhost/server"+connectedServer);
             System.out.println("\nConnected to server " + connectedServer);
             while(true){
                 System.out.println("\n1.Menu\t2.Place Order\t3.Order History\t4.Exit");
@@ -136,7 +136,15 @@ public class Client {
             }
         } catch (Exception e) {
             //TODO: handle exception
-            e.printStackTrace();
+            System.out.println("\nConnecting to backup server\n");
+            try{
+                connectedServer = "backup";
+                st = (ServerInterface)Naming.lookup("rmi://localhost/backup");
+                connection();
+            } catch(Exception exp){
+                exp.printStackTrace();
+            }
+            // e.printStackTrace();
         }
     }
 }

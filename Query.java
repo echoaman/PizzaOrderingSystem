@@ -3,7 +3,6 @@ import java.util.*;
 
 public final class Query {
 
-    public static boolean allow = true;
     public static final String db_url = "jdbc:mysql://localhost:3306/test";
     public static final String db_user = "root";
     public static final String db_pwd = "369369";
@@ -104,9 +103,6 @@ public final class Query {
     }
 
     public static ArrayList<ArrayList<String>> getMenu() {
-
-        System.out.println(allow);
-        allow = !allow;
 
         ArrayList<ArrayList<String>> menu = new ArrayList<>();
 
