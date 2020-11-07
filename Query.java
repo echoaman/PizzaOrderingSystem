@@ -1,8 +1,9 @@
 import java.sql.*;
 import java.util.*;
 
-public class Query {
+public final class Query {
 
+    public static boolean allow = true;
     public static final String db_url = "jdbc:mysql://localhost:3306/test";
     public static final String db_user = "root";
     public static final String db_pwd = "369369";
@@ -10,8 +11,7 @@ public class Query {
     public static void update_order_status(int oid) {
         try {
             Connection conn = DriverManager.getConnection(db_url, db_user, db_pwd);
-            PreparedStatement statement = conn
-                    .prepareStatement("UPDATE order_master SET order_status = True WHERE oid = ?");
+            PreparedStatement statement = conn.prepareStatement("UPDATE order_master SET order_status = True WHERE oid = ?");
             statement.setInt(1, oid);
 
             int rows = statement.executeUpdate();
@@ -21,7 +21,7 @@ public class Query {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
     }
 
     public static ArrayList<ArrayList<String>> get_all_user_orders() {
@@ -104,6 +104,10 @@ public class Query {
     }
 
     public static ArrayList<ArrayList<String>> getMenu() {
+
+        System.out.println(allow);
+        allow = !allow;
+
         ArrayList<ArrayList<String>> menu = new ArrayList<>();
 
         try {

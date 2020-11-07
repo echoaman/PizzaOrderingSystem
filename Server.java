@@ -73,5 +73,10 @@ public class Server extends UnicastRemoteObject implements ServerInterface {
         return orders;
     }
 
+    @Override
+    public long getServerTime() throws RemoteException {
+        return System.currentTimeMillis();
+    }
+
     
 }

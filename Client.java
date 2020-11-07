@@ -77,32 +77,57 @@ public class Client {
             connectedServer = st.getServerConnection(user_id);
             st = (ServerInterface)Naming.lookup("rmi://localhost/server"+connectedServer);
             System.out.println("\nConnected to server " + connectedServer);
-
             while(true){
                 System.out.println("\n1.Menu\t2.Place Order\t3.Order History\t4.Exit");
                 String choice = in.nextLine().trim();
 
                 if(choice.equals("1")){
-                    ArrayList<ArrayList<String>> menu = new ArrayList<>();
-                    menu = st.getMenu(user_id);
+                    long req_time = System.currentTimeMillis();
+                    ArrayList<ArrayList<String>> menu = st.getMenu(user_id);
+                    long server_time = st.getServerTime();
+                    long response_time = System.currentTimeMillis();
                     System.out.println("\nSrNo\tName\tCost");
                     for(ArrayList<String> row : menu){
                         System.out.println(row.get(0) + "\t" + row.get(1) + "\t" + row.get(2));
                     }
+
+                    System.out.println("\n");
+                    System.out.println("Request time = " + req_time);
+                    System.out.println("Response time = " + response_time);
+                    System.out.println("Synchronised time = " + (server_time + (response_time - req_time) / 2));
+                    System.out.println("\n");
                 }
 
                 if(choice.equals("2")){
                     System.out.print("\nEnter items: ");
                     String[] items = in.nextLine().trim().split(" ");
+                    long req_time = System.currentTimeMillis();
                     st.placeOrder(user_id, items);
+                    long server_time = st.getServerTime();
+                    long response_time = System.currentTimeMillis();
+
+                    System.out.println("\n");
+                    System.out.println("Request time = " + req_time);
+                    System.out.println("Response time = " + response_time);
+                    System.out.println("Synchronised time = " + (server_time + (response_time - req_time) / 2));
+                    System.out.println("\n");
                 }
 
                 if(choice.equals("3")){
+                    long req_time = System.currentTimeMillis();
                     ArrayList<ArrayList<String>> history = st.getUserOrders(user_id);
+                    long server_time = st.getServerTime();
+                    long response_time = System.currentTimeMillis();
                     System.out.println("\nSrNo\tDate\t\t\tStatus");
                     for(ArrayList<String> row : history){
                         System.out.println(row.get(0) + "\t" + row.get(1) + "\t" + row.get(2));
                     }
+
+                    System.out.println("\n");
+                    System.out.println("Request time = " + req_time);
+                    System.out.println("Response time = " + response_time);
+                    System.out.println("Synchronised time = " + (server_time + (response_time - req_time) / 2));
+                    System.out.println("\n");
                 }
 
                 if(choice.equals("4")){

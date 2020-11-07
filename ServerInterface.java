@@ -2,6 +2,8 @@ import java.rmi.*;
 import java.util.*;
 
 public interface ServerInterface extends Remote{
+ 
+    public long getServerTime() throws RemoteException;
     public int signin(String uname, String pwd) throws RemoteException;
     public int signup(String uname, String pwd) throws RemoteException;
     public String getServerConnection(int uid) throws RemoteException;
