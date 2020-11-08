@@ -18,7 +18,7 @@
 8. java -classpath "D:\DS\PizzaOrderingSystem;D:\DS\PizzaOrderingSystem\mysql-connector-java-8.0.21.jar" Admin
 ```
 
-## OR
+### OR
 
 ```java
 1. javac -classpath "D:\DS\PizzaOrderingSystem;D:\DS\PizzaOrderingSystem\mysql-connector-java-8.0.21.jar" *.java
